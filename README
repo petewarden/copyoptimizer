@@ -1,1 +1,24 @@
+CopyOptimizer
 
+As we're getting more traffic to the Jetpac home page (thanks AllThingsD!) optimizing our conversion rate has become a priority. In our case, the action we want people to take is connecting with Facebook, so we're having to work quite hard to figure out what messages work best to persuade people. In previous projects, it's often been quite a surprise exactly what sentences work, and so the only way is to test a lot of different approaches and see which strike a chord.
+
+I love KissMetrics as a measuring tool for that sort of experimentation, but I couldn't find a good example of how to do the sort of tests we need. Ideally it should be all data-driven, so that the even less-technical members of the team can edit the copy options and try out new variations without my involvement. I built out a small framework that does everything we need, and have just open-sourced it as a github project:
+
+https://github.com/petewarden/copyoptimizer
+
+To use it:
+- Edit index.html to add your own KissMetrics code
+- Go to index.js
+- Edit the g_copyChoices structure
+- Use the class name of the element you want to alter as the key, and create an array of possible text values for it
+- Once it's on the site, the class name and chosen text will show up in the KissMetrics reports as a drop-down option (though there's a lag in it showing up)
+
+For example I have a headline with the class name 'action_header', and a link I want people to click with the class 'action_button', so I have an example data structure like this:
+g_copyChoices = { 
+  'action_header':['Please click me!', 'If you wouldn\'t mind, click here', 'I\'d really like you to<br>click below'],
+  'action_button': ['Start Here', 'Next', 'Sign up']
+};
+
+When the page is first loaded, the inner HTML of the elements with those class names is replaced with a randomly-selected string from the array, and the choice is stored with KissMetrics so we can see which ones convert best in the reports. I also store the choices in cookies so that repeat visitors see the same text, and we don't pollute the metrics with varying choices.
+
+Once the data has had a chance to percolate through Kiss's servers, you can choose the class name from the drop-down menu below 'Funnel Overview' on the report page and see which of the messages had the best conversion rate.
