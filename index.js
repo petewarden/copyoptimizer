@@ -81,5 +81,5 @@ function setKissProperty(name, value) {
 
 // Returns an integer between start and end (excluding end)
 function randomInt(start, end) {
-  return Math.floor(start + (1+end-start)*Math.random());
+  return Math.floor(start + (end-start)*Math.random());
 }
